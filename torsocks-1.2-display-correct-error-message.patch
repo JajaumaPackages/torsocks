@@ -1,0 +1,65 @@
+From: intrigeri <intrigeri@boum.org>
+Date: Mon, 30 Jan 2012 17:55:42 +0100
+Subject: Display correct error message when the wrapped program cannot be
+ found in $PATH.
+
+---
+ src/torsocks.in   |    9 ++++++++-
+ src/usewithtor.in |    9 ++++++++-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/src/torsocks.in b/src/torsocks.in
+index 53db2fc..678f854 100755
+--- a/src/torsocks.in
++++ b/src/torsocks.in
+@@ -63,6 +63,11 @@
+ # Tamas Szerb <toma@rulez.org>
+ # Modified by Robert Hogan <robert@roberthogan.net> April 16th 2006
+ 
++not_found () {
++    echo "ERROR: $1 cannot be found in PATH." >&2
++    exit 1
++}
++
+ set_id () {
+     echo "ERROR: $1 is set${2}id. torsocks will not work on a set${2}id executable." >&2
+     exit 1
+@@ -133,7 +138,9 @@ case "$1" in
+ 
+     if [ $# -gt 0 ]
+     then
+-      if [ -u `which "$1"` ]; then
++      if ! which "$1" >/dev/null 2>&1; then
++          not_found $1
++      elif [ -u `which "$1"` ]; then
+           set_id $1 u
+       elif [ -g `which "$1"` ]; then
+           set_id $1 g
+diff --git a/src/usewithtor.in b/src/usewithtor.in
+index 0a1e42d..e606760 100644
+--- a/src/usewithtor.in
++++ b/src/usewithtor.in
+@@ -42,6 +42,11 @@ usage () {
+ 	echo "Usage: $0 [-hv] <command> [<options>...]"
+ }
+ 
++not_found () {
++	echo "ERROR: $1 cannot be found in PATH." >&2
++	exit 1
++}
++
+ set_id () {
+ 	echo "ERROR: $1 is set${2}id. usewithtor will not work on a set${2}id executable." >&2
+ 	exit 1
+@@ -68,7 +73,9 @@ while [ "$1" ]; do
+ 	esac
+ done
+ 
+-if [ -u `which "$1"` ]; then
++if ! which "$1" >/dev/null 2>&1; then
++	not_found $1
++elif [ -u `which "$1"` ]; then
+ 	set_id $1 u
+ elif [ -g `which "$1"` ]; then
+ 	set_id $1 g
+-- 
