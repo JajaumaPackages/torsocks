@@ -1,6 +1,6 @@
 Name:              torsocks
 Version:           1.3
-Release:           3%{?dist}
+Release:           4%{?dist}
 
 Summary:           Use SOCKS-friendly applications with Tor
 Group:             Applications/Internet
@@ -68,6 +68,9 @@ install -p -D -m 0644 %{SOURCE3} \
 
 
 %changelog
+* Mon Aug 18 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
 * Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
