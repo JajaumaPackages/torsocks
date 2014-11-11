@@ -2,7 +2,7 @@
 
 Name:              torsocks
 Version:           2.0.0
-Release:           1%{?dist}
+Release:           2%{?dist}
 
 Summary:           Use SOCKS-friendly applications with Tor
 Group:             Applications/Internet
@@ -36,6 +36,7 @@ make install DESTDIR=%{buildroot}
 
 # Remove extraneous files.
 rm -f %{buildroot}%{_libdir}/torsocks/libtorsocks.{a,la}*
+rm -fr %{buildroot}%{_datadir}/doc/torsocks
 
 # For bash completion.
 install -p -D -m 0644 %{SOURCE1} \
@@ -57,6 +58,9 @@ install -p -D -m 0644 %{SOURCE1} \
 
 
 %changelog
+* Tue Nov 11 2014 Jamie Nguyen <jamielinux@fedoraproject.org> - 2.0.0-2
+- remove extraneous files
+
 * Tue Nov 11 2014 Jamie Nguyen <jamielinux@fedoraproject.org> - 2.0.0-1
 - update to 2.0.0
 
