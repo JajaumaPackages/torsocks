@@ -1,8 +1,8 @@
-%global commit ea105bb76ea1e9f9660dd2307639b75ca6d76569
+%global commit bb972f433006efc660a334cc3a1248e7f6211964
 
 Name:              torsocks
 Version:           2.0.0
-Release:           2%{?dist}
+Release:           3%{?dist}
 
 Summary:           Use SOCKS-friendly applications with Tor
 Group:             Applications/Internet
@@ -58,6 +58,9 @@ install -p -D -m 0644 %{SOURCE1} \
 
 
 %changelog
+* Wed Apr 29 2015 Jon Ciesla <limburgher@gmail.com> - 2.0.0-3
+- Updated to latest to fix syscall errors.
+
 * Tue Nov 11 2014 Jamie Nguyen <jamielinux@fedoraproject.org> - 2.0.0-2
 - remove extraneous files
 
