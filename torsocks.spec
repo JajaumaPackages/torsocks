@@ -1,18 +1,19 @@
-%global commit bb972f433006efc660a334cc3a1248e7f6211964
-
 Name:              torsocks
-Version:           2.0.0
-Release:           3%{?dist}
+Version:           2.1.0
+Release:           1%{?dist}
 
 Summary:           Use SOCKS-friendly applications with Tor
 Group:             Applications/Internet
 License:           GPLv2+
 URL:               https://gitweb.torproject.org/torsocks.git
 
-Source0:           https://github.com/dgoulet/torsocks/archive/%{commit}/torsocks-%{commit}.tar.gz
-Source1:           torsocks.bash_completion
+Source0:           https://people.torproject.org/~dgoulet/torsocks/torsocks-%{version}.tar.bz2
+Source1:           https://people.torproject.org/~dgoulet/torsocks/torsocks-%{version}.tar.bz2.asc
 
-BuildRequires:     autoconf automake libtool
+Patch0:            %{name}-2.1.0-Do-not-run-tests-that-require-network-access.patch
+
+# Unit tests require /usr/bin/prove
+BuildRequires:     perl(Test::Harness)
 
 
 %description
@@ -22,11 +23,11 @@ rejects UDP traffic from the application you're using.
 
 
 %prep
-%setup -q -n torsocks-%{commit}
+%setup -q -n %{name}-%{version}
+%patch0 -p1
 
 
 %build
-./autogen.sh
 %configure --libdir=%{_libdir}
 make %{?_smp_mflags}
 
@@ -39,12 +40,18 @@ rm -f %{buildroot}%{_libdir}/torsocks/libtorsocks.{a,la}*
 rm -fr %{buildroot}%{_datadir}/doc/torsocks
 
 # For bash completion.
-install -p -D -m 0644 %{SOURCE1} \
+install -p -D -m0644 extras/torsocks-bash_completion \
     %{buildroot}%{_sysconfdir}/bash_completion.d/torsocks
 
 
+%check
+pushd tests/
+make check-am
+popd
+
+
 %files
-%doc ChangeLog gpl-2.0.txt LICENSE README.md
+%doc ChangeLog gpl-2.0.txt doc/notes/DEBUG doc/socks/socks-extensions.txt
 %{_bindir}/torsocks
 %{_mandir}/man1/torsocks.1.*
 %{_mandir}/man5/torsocks.conf.5.*
@@ -58,6 +65,10 @@ install -p -D -m 0644 %{SOURCE1} \
 
 
 %changelog
+* Thu May 28 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 2.1.0-1
+- update to upstream release 2.1.0
+- run test suite
+
 * Wed Apr 29 2015 Jon Ciesla <limburgher@gmail.com> - 2.0.0-3
 - Updated to latest to fix syscall errors.
 
