@@ -1,6 +1,6 @@
 Name:              torsocks
 Version:           2.1.0
-Release:           1%{?dist}
+Release:           2%{?dist}
 
 Summary:           Use SOCKS-friendly applications with Tor
 Group:             Applications/Internet
@@ -65,6 +65,9 @@ popd
 
 
 %changelog
+* Fri Jun 19 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Thu May 28 2015 Jamie Nguyen <jamielinux@fedoraproject.org> - 2.1.0-1
 - update to upstream release 2.1.0
 - run test suite
