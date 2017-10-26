@@ -1,16 +1,14 @@
 Name:              torsocks
-Version:           2.1.0
-Release:           6%{?dist}
+Version:           2.2.0
+Release:           1%{?dist}
 
 Summary:           Use SOCKS-friendly applications with Tor
 Group:             Applications/Internet
 License:           GPLv2+
 URL:               https://gitweb.torproject.org/torsocks.git
 
-Source0:           https://people.torproject.org/~dgoulet/torsocks/torsocks-%{version}.tar.bz2
-Source1:           https://people.torproject.org/~dgoulet/torsocks/torsocks-%{version}.tar.bz2.asc
-
-Patch0:            %{name}-2.1.0-Do-not-run-tests-that-require-network-access.patch
+Source0:           https://people.torproject.org/~dgoulet/torsocks/torsocks-%{version}.tar.xz
+Source1:           https://people.torproject.org/~dgoulet/torsocks/torsocks-%{version}.tar.xz.asc
 
 # Unit tests require /usr/bin/prove
 BuildRequires:     perl(Test::Harness)
@@ -24,7 +22,6 @@ rejects UDP traffic from the application you're using.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1
 
 
 %build
@@ -65,6 +62,10 @@ popd
 
 
 %changelog
+* Thu Oct 26 2017 Jajauma's Packages <jajauma@yandex.ru> - 2.2.0-1
+- Update to latest upstream release
+- Run all tests
+
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.1.0-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
